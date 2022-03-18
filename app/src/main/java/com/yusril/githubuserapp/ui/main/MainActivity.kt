@@ -5,8 +5,8 @@ import android.app.SearchManager
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusril.githubuserapp.R
 import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.databinding.ActivityMainBinding
+import com.yusril.githubuserapp.vo.Status
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         initViewModel()
+        hideLoading()
 
     }
 
@@ -64,9 +66,20 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
                 if (query != null) {
                     if (query.isNotEmpty()) {
+                        showLoading()
                         viewModel.setSearchResult(query).observe(this@MainActivity){
-                            Log.d("testes vm", it.toString())
-                            adapter.setUser(it)
+                            when(it.status){
+                                Status.LOADING -> showLoading()
+                                Status.SUCCESS -> {
+                                    it.data?.let { users -> adapter.setUser(users) }
+                                    hideLoading()
+                                }
+                                Status.ERROR -> {
+                                    hideLoading()
+                                    Toast.makeText(this@MainActivity,
+                                        "Failure: ${it.message}", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         }
                     }
                 }
@@ -79,5 +92,21 @@ class MainActivity : AppCompatActivity() {
         })
 
         return true
+    }
+
+    private fun showLoading(){
+        binding.apply {
+            rvUsers.visibility = View.GONE
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.showShimmer(true)
+        }
+    }
+
+    private fun hideLoading(){
+        binding.apply {
+            shimmerLayout.stopShimmer()
+            rvUsers.visibility = View.VISIBLE
+            shimmerLayout.visibility = View.GONE
+        }
     }
 }

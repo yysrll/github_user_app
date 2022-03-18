@@ -43,7 +43,6 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.RecyclerViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        Log.d("testes $position", position.toString())
         holder.bind(listUsers[position])
         holder.itemView.setOnClickListener { onItemClickCallback?.onItemClicked(listUsers[position]) }
     }
