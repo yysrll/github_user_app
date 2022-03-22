@@ -2,19 +2,19 @@ package com.yusril.githubuserapp.ui.follow
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yusril.githubuserapp.R
 import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.databinding.FragmentFollowBinding
 import com.yusril.githubuserapp.ui.detail.DetailActivity
-import com.yusril.githubuserapp.ui.main.MainViewModel
 import com.yusril.githubuserapp.ui.main.SearchAdapter
+import com.yusril.githubuserapp.vo.Resource
+import com.yusril.githubuserapp.vo.Status
 
 class FollowFragment : Fragment() {
 
@@ -55,10 +55,24 @@ class FollowFragment : Fragment() {
     private fun setUserList(index: Int, user: User) {
         when (index) {
             1 -> viewModel.getFollowers(user.login).observe(viewLifecycleOwner){
-                it.data?.let { users -> adapter.setUser(users) }
+                populateFollow(it)
             }
             2 -> viewModel.getFollowing(user.login).observe(viewLifecycleOwner){
+                populateFollow(it)
+            }
+        }
+    }
+
+    private fun populateFollow(it: Resource<ArrayList<User>>) {
+        when(it.status) {
+            Status.LOADING -> showLoading()
+            Status.SUCCESS -> {
                 it.data?.let { users -> adapter.setUser(users) }
+                hideLoading()
+            }
+            Status.ERROR -> {
+                hideLoading()
+                Toast.makeText(activity, "Failure: ${it.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -80,6 +94,22 @@ class FollowFragment : Fragment() {
                 DetailActivity.start(activity, user)
             }
         })
+    }
+
+    private fun showLoading(){
+        binding.apply {
+            rvUsers.visibility = View.GONE
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.showShimmer(true)
+        }
+    }
+
+    private fun hideLoading(){
+        binding.apply {
+            shimmerLayout.stopShimmer()
+            rvUsers.visibility = View.VISIBLE
+            shimmerLayout.visibility = View.GONE
+        }
     }
 
     companion object {
