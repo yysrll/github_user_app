@@ -44,18 +44,6 @@
             tools:text="@tools:sample/full_names"
             />
 
-        <TextView
-            android:id="@+id/user_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@tools:sample/cities"
-            />
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

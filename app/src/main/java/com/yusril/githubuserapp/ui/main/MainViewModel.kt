@@ -13,12 +13,5 @@ import kotlinx.coroutines.*
 class MainViewModel(): ViewModel() {
     private val repository: RemoteRepository = RemoteRepository()
 
-//    private val _data = MutableLiveData<Resource<ArrayList<User>>>()
-//    var data: LiveData<Resource<ArrayList<User>>> = _data
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    var isLoading: LiveData<Boolean> = _isLoading
-
-
     fun setSearchResult(username: String): LiveData<Resource<ArrayList<User>>> = repository.loadSearchResult(username)
 }

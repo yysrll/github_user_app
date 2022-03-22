@@ -32,7 +32,6 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.RecyclerViewHolder>() {
                     .load(user.avatar_url)
                     .into(userAvatar)
                 userName.text = user.login
-                userScore.text = user.score.toString()
             }
         }
     }

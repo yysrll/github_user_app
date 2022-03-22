@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusril.githubuserapp.R
 import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.databinding.ActivityMainBinding
+import com.yusril.githubuserapp.ui.detail.DetailActivity
 import com.yusril.githubuserapp.vo.Status
 
 class MainActivity : AppCompatActivity() {
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         adapter.setOnItemClickCallback(object : SearchAdapter.OnItemClickCallback{
             override fun onItemClicked(user: User) {
                 Toast.makeText(this@MainActivity, user.login, Toast.LENGTH_SHORT).show()
+                DetailActivity.start(this@MainActivity, user)
             }
         })
     }
