@@ -20,7 +20,6 @@ class FollowFragment : Fragment() {
 
     private var _binding: FragmentFollowBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var binding: FragmentFollowBinding
     private lateinit var adapter: SearchAdapter
     private lateinit var viewModel: FollowViewModel
 

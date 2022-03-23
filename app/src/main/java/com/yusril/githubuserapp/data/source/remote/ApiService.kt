@@ -4,10 +4,7 @@ import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.data.model.UserDetail
 import com.yusril.githubuserapp.data.source.remote.response.UserResponse
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
     @GET("search/users")
