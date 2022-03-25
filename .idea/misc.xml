@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_detail.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/activity_detail_placeholder.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_favorite.xml" value="0.14266304347826086" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/detail_header.xml" value="0.2867797851562501" />
         <entry key="app/src/main/res/layout/fragment_follow.xml" value="0.2078125" />

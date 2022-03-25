@@ -14,7 +14,7 @@ class SearchAdapter: RecyclerView.Adapter<SearchAdapter.RecyclerViewHolder>() {
     private var onItemClickCallback: OnItemClickCallback? = null
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setUser(items: ArrayList<User>) {
+    fun setUser(items: List<User>) {
         listUsers.clear()
         listUsers.addAll(items)
         this.notifyDataSetChanged()

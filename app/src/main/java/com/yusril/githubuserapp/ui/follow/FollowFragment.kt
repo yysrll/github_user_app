@@ -13,6 +13,7 @@ import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.databinding.FragmentFollowBinding
 import com.yusril.githubuserapp.ui.detail.DetailActivity
 import com.yusril.githubuserapp.ui.main.SearchAdapter
+import com.yusril.githubuserapp.viewmodel.ViewModelFactory
 import com.yusril.githubuserapp.vo.Resource
 import com.yusril.githubuserapp.vo.Status
 
@@ -77,7 +78,8 @@ class FollowFragment : Fragment() {
     }
 
     private fun initViewModel(){
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FollowViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(requireActivity().application)
+        viewModel = ViewModelProvider(this, factory)[FollowViewModel::class.java]
     }
 
     @SuppressLint("NotifyDataSetChanged")

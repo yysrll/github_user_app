@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -15,6 +16,8 @@ import com.yusril.githubuserapp.R
 import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.databinding.ActivityMainBinding
 import com.yusril.githubuserapp.ui.detail.DetailActivity
+import com.yusril.githubuserapp.ui.favorite.FavoriteActivity
+import com.yusril.githubuserapp.viewmodel.ViewModelFactory
 import com.yusril.githubuserapp.vo.Status
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +38,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel(){
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(application)
+        viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -93,6 +97,15 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.favorite -> {
+                FavoriteActivity.start(this)
+            }
+        }
         return true
     }
 

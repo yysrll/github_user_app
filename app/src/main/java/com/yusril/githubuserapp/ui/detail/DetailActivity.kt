@@ -14,18 +14,34 @@ import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.data.model.UserDetail
 import com.yusril.githubuserapp.databinding.ActivityDetailBinding
 import com.yusril.githubuserapp.ui.follow.SectionPagerAdapter
+import com.yusril.githubuserapp.viewmodel.ViewModelFactory
 import com.yusril.githubuserapp.vo.Status
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
+    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initViewModel()
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val user = intent.getParcelableExtra<User>(USER)
+
+        buttonChecked()
+        if (user != null) {
+            viewModel.getFavoriteByUsername(user.login).observe(this){
+                if (it.isNotEmpty()) {
+                    isFavorite = true
+                    buttonChecked()
+                }
+            }
+        }
 
         val sectionPagerAdapter = SectionPagerAdapter(this)
         val viewPager = binding.viewPager
@@ -36,8 +52,6 @@ class DetailActivity : AppCompatActivity() {
         }.attach()
 
         supportActionBar?.elevation = 0f
-
-        initViewModel()
 
         user?.let { u ->
             viewModel.getUser(u.login).observe(this){
@@ -55,6 +69,34 @@ class DetailActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+        binding.fab.setOnClickListener {
+            isFavorite = !isFavorite
+            when(isFavorite) {
+                true -> {
+                    user?.let { user -> viewModel.insertUser(user) }
+                    buttonChecked()
+                }
+                false -> {
+                    user?.let { user -> viewModel.deleteUser(user) }
+                    buttonChecked()
+                }
+            }
+        }
+    }
+
+    private fun buttonChecked() {
+        if (isFavorite) {
+            binding.fab.setImageResource(R.drawable.ic_favorite)
+        } else {
+            binding.fab.setImageResource(R.drawable.ic_favorite_border)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     private fun populateDetail(data: UserDetail) {
@@ -73,7 +115,8 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun initViewModel(){
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailViewModel::class.java]
+        val factory = ViewModelFactory.getInstance(application)
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
     }
 
 
