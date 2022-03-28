@@ -10,10 +10,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/detail_header.xml" value="0.2867797851562501" />
         <entry key="app/src/main/res/layout/fragment_follow.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/settings_activity.xml" value="0.15476190476190477" />
         <entry key="app/src/main/res/layout/user_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/user_row_item.xml" value="0.24895833333333334" />
         <entry key="app/src/main/res/layout/user_row_placeholder.xml" value="0.24375" />
         <entry key="app/src/main/res/menu/option_menu.xml" value="0.24895833333333334" />
+        <entry key="app/src/main/res/xml/root_preferences.xml" value="0.335" />
       </map>
     </option>
   </component>

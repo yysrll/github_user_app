@@ -9,12 +9,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.ListPreference
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yusril.githubuserapp.R
 import com.yusril.githubuserapp.data.model.User
 import com.yusril.githubuserapp.databinding.ActivityMainBinding
+import com.yusril.githubuserapp.setting.SettingsActivity
 import com.yusril.githubuserapp.ui.detail.DetailActivity
 import com.yusril.githubuserapp.ui.favorite.FavoriteActivity
 import com.yusril.githubuserapp.viewmodel.ViewModelFactory
@@ -56,6 +60,10 @@ class MainActivity : AppCompatActivity() {
                 DetailActivity.start(this@MainActivity, user)
             }
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -104,6 +112,9 @@ class MainActivity : AppCompatActivity() {
         when(item.itemId) {
             R.id.favorite -> {
                 FavoriteActivity.start(this)
+            }
+            R.id.setting -> {
+                SettingsActivity.start(this)
             }
         }
         return true
